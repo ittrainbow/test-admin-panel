@@ -23,7 +23,7 @@ const SideContentMobile = props => {
 			placement="left"
 			closable={false}
 			onClose={onSideContentClose}
-			visible={visible}
+			open={visible}
 			bodyStyle={{paddingLeft: 0, paddingRight: 0}}
 		>
 			<div className="h-100">
@@ -50,7 +50,7 @@ export const InnerAppLayout = props => {
 		<div className="inner-app-layout">
 			{isMobile ? 
 				<SideContentMobile 
-					visible={visible} 
+					open={visible} 
 					onSideContentClose={close}
 					{...props}
 				/> 
