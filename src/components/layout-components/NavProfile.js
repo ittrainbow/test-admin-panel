@@ -60,7 +60,7 @@ export const NavProfile = ({signOut}) => {
               </Menu.Item>
             );
           })}
-          <Menu.Item key={menuItem.legth + 1} onClick={e => signOut()}>
+          <Menu.Item key={menuItem.length + 1} onClick={e => signOut()}>
             <span>
               <LogoutOutlined className="mr-3"/>
               <span className="font-weight-normal">Sign Out</span>
