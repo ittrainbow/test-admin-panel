@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { Card, Table, Input, Select } from 'antd'
 
+import Select from '@mui/material/Select'
+import MenuItem from '@mui/material/MenuItem'
+
 import { productsTable } from './productsTable'
 
 const Products = () => {
@@ -57,10 +60,24 @@ const Products = () => {
         <Input placeholder="Search" style={{ width: 250 }} onChange={handleSearchChange} />
         <Select
           defaultValue={select[0].label}
-          style={{ width: 250 }}
+          style={{ width: 250, zIndex: 1001 }}
           onChange={handleSelectChange}
           options={select}
         />
+        <Select
+          labelId="demo-simple-select-helper-label"
+          id="demo-simple-select-helper"
+          value={age}
+          label="Age"
+          onChange={handleChange}
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          <MenuItem value={10}>Ten</MenuItem>
+          <MenuItem value={20}>Twenty</MenuItem>
+          <MenuItem value={30}>Thirty</MenuItem>
+        </Select>
       </div>
       {!loading && (
         <Card bodyStyle={{ padding: '0px' }}>
