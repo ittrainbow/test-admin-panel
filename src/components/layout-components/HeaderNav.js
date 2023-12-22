@@ -1,45 +1,48 @@
-import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
-import { Layout } from "antd";
-import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
-import Logo from './Logo';
-import NavPanel from './NavPanel';
-import NavSearch  from './NavSearch';
-import { toggleCollapsedNav, onMobileNavToggle } from 'redux/actions/Theme';
-import { NAV_TYPE_TOP, SIDE_NAV_COLLAPSED_WIDTH, SIDE_NAV_WIDTH } from 'constants/ThemeConstant';
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Layout } from 'antd'
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
+import Logo from './Logo'
+import NavPanel from './NavPanel'
+import NavSearch from './NavSearch'
+import { NAV_TYPE_TOP, SIDE_NAV_COLLAPSED_WIDTH, SIDE_NAV_WIDTH } from 'constants/ThemeConstant'
 import utils from 'utils'
+import { TOGGLE_COLLAPSED_NAV, TOGGLE_MOBILE_NAV } from 'redux/constants/Theme'
 
-const { Header } = Layout;
+const { Header } = Layout
 
-export const HeaderNav = props => {
-  const { navCollapsed, mobileNav, navType, headerNavColor, toggleCollapsedNav, onMobileNavToggle, isMobile, currentTheme } = props;
+export const HeaderNav = (props) => {
+  console.log('HeaderNav rendered')
+  const dispatch = useDispatch()
+  const { isMobile } = props
   const [searchActive, setSearchActive] = useState(false)
+  const { navCollapsed, navType, headerNavColor, mobileNav, currentTheme } = useSelector((store) => store.theme)
 
   const onSearchClose = () => {
     setSearchActive(false)
   }
 
   const onToggle = () => {
-    if(!isMobile) {
-      toggleCollapsedNav(!navCollapsed)
+    if (!isMobile) {
+      dispatch({ type: TOGGLE_COLLAPSED_NAV, payload: !navCollapsed })
     } else {
-      onMobileNavToggle(!mobileNav)
+      dispatch({ type: TOGGLE_MOBILE_NAV, payload: !mobileNav })
     }
   }
 
   const isNavTop = navType === NAV_TYPE_TOP ? true : false
-  const mode = ()=> {
-    if(!headerNavColor) {
-      return utils.getColorContrast(currentTheme === 'dark' ? '#00000' : '#ffffff' )
+  const mode = () => {
+    if (!headerNavColor) {
+      return utils.getColorContrast(currentTheme === 'dark' ? '#00000' : '#ffffff')
     }
     return utils.getColorContrast(headerNavColor)
   }
   const navMode = mode()
   const getNavWidth = () => {
-    if(isNavTop || isMobile) {
+    if (isNavTop || isMobile) {
       return '0px'
     }
-    if(navCollapsed) {
+    if (navCollapsed) {
       return `${SIDE_NAV_COLLAPSED_WIDTH}px`
     } else {
       return `${SIDE_NAV_WIDTH}px`
@@ -47,41 +50,41 @@ export const HeaderNav = props => {
   }
 
   useEffect(() => {
-    if(!isMobile) {
+    if (!isMobile) {
       onSearchClose()
     }
   })
 
   return (
-    <Header className={`app-header ${navMode}`} style={{backgroundColor: headerNavColor}}>
+    <Header className={`app-header ${navMode}`} style={{ backgroundColor: headerNavColor }}>
       <div className={`app-header-wrapper ${isNavTop ? 'layout-top-nav' : ''}`}>
-        <Logo logoType={navMode}/>
-        <div className="nav" style={{width: `calc(100% - ${getNavWidth()})`}}>
+        <Logo logoType={navMode} />
+        <div className="nav" style={{ width: `calc(100% - ${getNavWidth()})` }}>
           <div className="nav-left">
-            <ul className="ant-menu ant-menu-root ant-menu-horizontal">          
-              {
-                isNavTop && !isMobile ?
-                null
-                :
-                <li className="ant-menu-item ant-menu-item-only-child" onClick={() => {onToggle()}}>
-                  {navCollapsed || isMobile ? <MenuUnfoldOutlined className="nav-icon" /> : <MenuFoldOutlined className="nav-icon" />}
+            <ul className="ant-menu ant-menu-root ant-menu-horizontal">
+              {isNavTop && !isMobile ? null : (
+                <li
+                  className="ant-menu-item ant-menu-item-only-child"
+                  onClick={() => {
+                    onToggle()
+                  }}
+                >
+                  {navCollapsed || isMobile ? (
+                    <MenuUnfoldOutlined className="nav-icon" />
+                  ) : (
+                    <MenuFoldOutlined className="nav-icon" />
+                  )}
                 </li>
-              }
+              )}
             </ul>
           </div>
           <div className="nav-right">
             <NavPanel />
           </div>
-          <NavSearch active={searchActive} close={onSearchClose}/>
+          <NavSearch active={searchActive} close={onSearchClose} />
         </div>
       </div>
     </Header>
   )
 }
-
-const mapStateToProps = ({ theme }) => {
-  const { navCollapsed, navType, headerNavColor, mobileNav, currentTheme } =  theme;
-  return { navCollapsed, navType, headerNavColor, mobileNav, currentTheme }
-};
-
-export default connect(mapStateToProps, {toggleCollapsedNav, onMobileNavToggle})(HeaderNav);
+export default HeaderNav

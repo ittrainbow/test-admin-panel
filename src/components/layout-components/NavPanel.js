@@ -1,43 +1,33 @@
-import React, { Component } from 'react'
+import React, { useEffect } from 'react'
 import { SettingOutlined } from '@ant-design/icons'
 import { Drawer, Menu } from 'antd'
 import ThemeConfigurator from './ThemeConfigurator'
-import { connect } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { TOGGLE_THEME_CONFIG_OPEN } from 'redux/constants/Theme'
 
-export class NavPanel extends Component {
-  state = { visible: false }
+export const NavPanel = () => {
+  console.log('NavPanel rendered')
+  const dispatch = useDispatch()
+  const { themeConfigOpen } = useSelector((store) => store.theme)
 
-  showDrawer = () => {
-    this.setState({
-      visible: true
-    })
-  }
+  useEffect(() => {
+    console.log('NavPanel themeConfigOpen', themeConfigOpen)
+  }, [themeConfigOpen])
 
-  onClose = () => {
-    this.setState({
-      visible: false
-    })
-  }
+  const handleToggle = () => dispatch({ type: TOGGLE_THEME_CONFIG_OPEN })
 
-  render() {
-    return (
-      <>
-        <Menu mode="horizontal">
-          <Menu.Item onClick={this.showDrawer}>
-            <SettingOutlined className="nav-icon mr-0" />
-          </Menu.Item>
-        </Menu>
-        <Drawer title="Theme Config" placement="right" width={350} onClose={this.onClose} open={this.state.visible}>
-          <ThemeConfigurator />
-        </Drawer>
-      </>
-    )
-  }
+  return (
+    <>
+      <Menu mode="horizontal">
+        <Menu.Item onClick={handleToggle}>
+          <SettingOutlined className="nav-icon mr-0" />
+        </Menu.Item>
+      </Menu>
+      <Drawer title="Theme Config" placement="right" width={350} onClose={handleToggle} open={themeConfigOpen}>
+        <ThemeConfigurator />
+      </Drawer>
+    </>
+  )
 }
 
-const mapStateToProps = ({ theme }) => {
-  const { locale } = theme
-  return { locale }
-}
-
-export default connect(mapStateToProps)(NavPanel)
+export default NavPanel

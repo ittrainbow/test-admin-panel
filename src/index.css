@@ -15,3 +15,10 @@
 .loading .ant-spin {
   color: #3e79f7;
 }
+
+.d-flex-row {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 10px !important;
+  padding: 10px 0 !important;
+}
