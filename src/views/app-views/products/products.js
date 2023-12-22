@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { Card, Table, Input, Select } from 'antd'
+
 import { productsTable } from './productsTable'
 
 const Products = () => {
   const [loading, setLoading] = useState(true)
+  const [open, setOpen] = useState(false)
   const [select, setSelect] = useState([{ value: 'all', label: 'All' }])
   const [products, setProducts] = useState([])
   const [nameFilter, setNameFilter] = useState('')
   const [categoryFilter, setCategoryFilter] = useState('')
-
-  console.log(1000, 'products render')
 
   useEffect(() => {
     const fetchProducts = async () =>
@@ -28,6 +28,10 @@ const Products = () => {
     fetchProducts()
   }, [])
 
+  useEffect(() => {
+    console.log(200, open)
+  }, [open])
+
   const toUpperCase = (str) => str.charAt(0).toUpperCase() + str.slice(1)
 
   const handleSearchChange = (e) => {
@@ -36,6 +40,7 @@ const Products = () => {
   }
 
   const handleSelectChange = (e) => {
+    setOpen(false)
     const value = e === 'all' ? '' : e
     setCategoryFilter(value)
   }
@@ -50,7 +55,12 @@ const Products = () => {
     <>
       <div className="d-flex-row">
         <Input placeholder="Search" style={{ width: 250 }} onChange={handleSearchChange} />
-        <Select defaultValue={select[0].label} style={{ width: 250 }} onChange={handleSelectChange} options={select} />
+        <Select
+          defaultValue={select[0].label}
+          style={{ width: 250 }}
+          onChange={handleSelectChange}
+          options={select}
+        />
       </div>
       {!loading && (
         <Card bodyStyle={{ padding: '0px' }}>

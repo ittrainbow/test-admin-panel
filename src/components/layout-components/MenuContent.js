@@ -73,7 +73,9 @@ const SideNavContent = (props) => {
             )}
           </Menu.ItemGroup>
         ) : (
-          <Menu.Item key={menu.key}>
+          <Menu.Item
+          // key={menu.key}
+          >
             {menu.icon ? <Icon type={menu?.icon} /> : null}
             <span>{setLocale(localization, menu?.title)}</span>
             {menu.path ? <Link onClick={() => closeMobileNav()} to={menu.path} /> : null}
@@ -91,7 +93,7 @@ const TopNavContent = (props) => {
       {navigationConfig.map((menu) =>
         menu.submenu.length > 0 ? (
           <SubMenu
-            key={menu.key}
+            // key={menu.key}
             popupClassName="top-nav-menu"
             title={
               <span>
@@ -103,19 +105,23 @@ const TopNavContent = (props) => {
             {menu.submenu.map((subMenuFirst) =>
               subMenuFirst.submenu.length > 0 ? (
                 <SubMenu
-                  key={subMenuFirst.key}
+                  // key={subMenuFirst.key}
                   icon={subMenuFirst.icon ? <Icon type={subMenuFirst?.icon} /> : null}
                   title={setLocale(localization, subMenuFirst.title)}
                 >
                   {subMenuFirst.submenu.map((subMenuSecond) => (
-                    <Menu.Item key={subMenuSecond.key}>
+                    <Menu.Item
+                    // key={subMenuSecond.key}
+                    >
                       <span>{setLocale(localization, subMenuSecond.title)}</span>
                       <Link to={subMenuSecond.path} />
                     </Menu.Item>
                   ))}
                 </SubMenu>
               ) : (
-                <Menu.Item key={subMenuFirst.key}>
+                <Menu.Item
+                // key={subMenuFirst.key}
+                >
                   {subMenuFirst.icon ? <Icon type={subMenuFirst?.icon} /> : null}
                   <span>{setLocale(localization, subMenuFirst.title)}</span>
                   <Link to={subMenuFirst.path} />
@@ -124,7 +130,9 @@ const TopNavContent = (props) => {
             )}
           </SubMenu>
         ) : (
-          <Menu.Item key={menu.key}>
+          <Menu.Item
+          // key={menu.key}
+          >
             {menu.icon ? <Icon type={menu?.icon} /> : null}
             <span>{setLocale(localization, menu?.title)}</span>
             {menu.path ? <Link to={menu.path} /> : null}

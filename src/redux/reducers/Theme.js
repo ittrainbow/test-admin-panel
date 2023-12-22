@@ -11,11 +11,11 @@ import {
 } from '../constants/Theme'
 import { THEME_CONFIG } from 'configs/AppConfig'
 
-const initTheme = {
+const initState = {
   ...THEME_CONFIG
 }
 
-const theme = (state = initTheme, action) => {
+const theme = (state = initState, action) => {
   switch (action.type) {
     case TOGGLE_THEME_CONFIG_OPEN: {
       return {

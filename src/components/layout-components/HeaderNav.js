@@ -12,7 +12,7 @@ import { TOGGLE_COLLAPSED_NAV, TOGGLE_MOBILE_NAV } from 'redux/constants/Theme'
 const { Header } = Layout
 
 export const HeaderNav = (props) => {
-  console.log('HeaderNav rendered')
+  // console.log('HeaderNav rendered')
   const dispatch = useDispatch()
   const { isMobile } = props
   const [searchActive, setSearchActive] = useState(false)
@@ -78,9 +78,7 @@ export const HeaderNav = (props) => {
               )}
             </ul>
           </div>
-          <div className="nav-right">
-            <NavPanel />
-          </div>
+          <NavPanel />
           <NavSearch active={searchActive} close={onSearchClose} />
         </div>
       </div>
