@@ -64,7 +64,7 @@ const MapChart = ({ setTooltipContent, data, mapSource, mapType }) => {
             const geoName = mapType === 'world' ? geo.properties.name : geo.properties.NAME_1
             return (
               <Geography
-                // key={geo.rsmKey}
+                key={geo.rsmKey}
                 geography={geo}
                 onMouseEnter={() => {
                   setTooltipContent(getRegionValue(geoName, data))
@@ -102,10 +102,7 @@ const Map = (props) => {
 
 const renderDataList = (data) => {
   const list = data.map((elm) => (
-    <div
-      className="d-flex align-items-center justify-content-between mb-3"
-      // key={elm.name}
-    >
+    <div className="d-flex align-items-center justify-content-between mb-3" key={elm.name}>
       <div>
         <Badge color={elm.color} />
         <span className="text-gray-light">{elm.name}</span>

@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react'
+import React, { Suspense } from 'react'
 import { Route, useRouteMatch, Switch, Redirect } from 'react-router-dom'
 import Loading from 'components/shared-components/Loading'
 
@@ -9,11 +9,7 @@ const PageRouter = ({ routes, from, to, align, cover }) => {
     <Suspense fallback={<Loading {...loadingProps} />}>
       <Switch>
         {routes.map((route, i) => (
-          <Route
-            // key={i}
-            path={`${url}/${route.path}`}
-            component={route.component}
-          />
+          <Route key={i} path={`${url}/${route.path}`} component={route.component} />
         ))}
         <Redirect from={from} to={to} />
       </Switch>

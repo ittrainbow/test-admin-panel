@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { SettingOutlined } from '@ant-design/icons'
 import { Drawer, Menu } from 'antd'
 import ThemeConfigurator from './ThemeConfigurator'
@@ -9,14 +9,7 @@ export const NavPanel = () => {
   const dispatch = useDispatch()
   const { themeConfigOpen } = useSelector((store) => store.theme)
 
-  useEffect(() => {
-    // console.log('NavPanel themeConfigOpen', themeConfigOpen)
-  }, [themeConfigOpen])
-
   const handleToggle = () => dispatch({ type: TOGGLE_THEME_CONFIG_OPEN })
-
-  const width = window.innerWidth
-  console.log(185, width)
 
   return (
     <>

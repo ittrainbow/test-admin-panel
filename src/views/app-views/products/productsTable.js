@@ -1,8 +1,9 @@
-import AvatarStatus from 'components/shared-components/AvatarStatus'
 import { MoreOutlined } from '@ant-design/icons'
 import { Tooltip, Button } from 'antd'
 
-export const productsTable = () => {
+import { AvatarStatus } from 'components/shared-components/AvatarStatus'
+
+export const ProductsTable = () => {
   return [
     {
       title: 'id',

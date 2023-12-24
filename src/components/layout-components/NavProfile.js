@@ -46,9 +46,7 @@ export const NavProfile = ({ signOut }) => {
         <Menu>
           {menuItem.map((el, i) => {
             return (
-              <Menu.Item 
-              // key={i}
-              >
+              <Menu.Item key={i}>
                 <a href={el.path}>
                   <Icon className="mr-3" type={el.icon} />
                   <span className="font-weight-normal">{el.title}</span>
@@ -56,10 +54,7 @@ export const NavProfile = ({ signOut }) => {
               </Menu.Item>
             )
           })}
-          <Menu.Item
-            // key={menuItem.length + 1}
-            onClick={(e) => signOut()}
-          >
+          <Menu.Item key={menuItem.length + 1} onClick={(e) => signOut()}>
             <span>
               <LogoutOutlined className="mr-3" />
               <span className="font-weight-normal">Sign Out</span>

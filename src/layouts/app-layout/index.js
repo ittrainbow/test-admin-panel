@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import SideNav from 'components/layout-components/SideNav'
 import TopNav from 'components/layout-components/TopNav'
-import Loading from 'components/shared-components/Loading'
 import MobileNav from 'components/layout-components/MobileNav'
 import HeaderNav from 'components/layout-components/HeaderNav'
 import PageHeader from 'components/layout-components/PageHeader'
@@ -13,7 +12,6 @@ import { Layout, Grid } from 'antd'
 import navigationConfig from 'configs/NavigationConfig'
 import { SIDE_NAV_WIDTH, SIDE_NAV_COLLAPSED_WIDTH, NAV_TYPE_SIDE, NAV_TYPE_TOP } from 'constants/ThemeConstant'
 import utils from 'utils'
-import { useThemeSwitcher } from 'react-css-theme-switcher'
 const { Content } = Layout
 const { useBreakpoint } = Grid
 
@@ -28,12 +26,6 @@ export const AppLayout = ({ navCollapsed, navType, location }) => {
       return 0
     }
     return navCollapsed ? SIDE_NAV_COLLAPSED_WIDTH : SIDE_NAV_WIDTH
-  }
-
-  const { status } = useThemeSwitcher()
-
-  if (status === 'loading') {
-    return <Loading cover="page" />
   }
 
   return (

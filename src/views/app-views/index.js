@@ -5,12 +5,16 @@ import { APP_PREFIX_PATH } from 'configs/AppConfig'
 
 export const AppViews = () => {
   return (
-    <Suspense fallback={<Loading cover="content" />}>
+    <Suspense fallback={<Loading />}>
       <Switch>
         <Route path={`${APP_PREFIX_PATH}/home`} component={lazy(() => import(`./home.js`))} />
-        <Route path={`${APP_PREFIX_PATH}/catalog/products`} component={lazy(() => import(`./products/products.js`))} />
-        <Route path={`${APP_PREFIX_PATH}/clients/list`} component={lazy(() => import(`./clients/UserList.js`))} />
-        <Redirect from={`${APP_PREFIX_PATH}`} to={`${APP_PREFIX_PATH}/home`} />
+        <Route
+          path={`${APP_PREFIX_PATH}/catalog/products`}
+          component={lazy(() => import(`./products/ProductsList.js`))}
+        />
+        <Route path={`${APP_PREFIX_PATH}/clients/list`} component={lazy(() => import(`./clients/UsersList.js`))} />
+        <Route path={`${APP_PREFIX_PATH}/clients/user`} component={lazy(() => import(`./clients/UserProfile.js`))} />
+        <Redirect from={`${APP_PREFIX_PATH}`} to={`${APP_PREFIX_PATH}/catalog/products`} />
       </Switch>
     </Suspense>
   )

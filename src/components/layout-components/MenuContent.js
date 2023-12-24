@@ -15,6 +15,7 @@ const { useBreakpoint } = Grid
 const setLocale = (isLocaleOn, localeKey) => (isLocaleOn ? <IntlMessage id={localeKey} /> : localeKey.toString())
 
 const setDefaultOpen = (key) => {
+  console.log(350, key)
   let keyList = []
   let keyString = ''
   if (key) {
@@ -36,13 +37,14 @@ const SideNavContent = (props) => {
       onMobileNavToggle(false)
     }
   }
+
   return (
     <Menu
       theme={sideNavTheme === SIDE_NAV_LIGHT ? 'light' : 'dark'}
       mode="inline"
       style={{ height: '100%', borderRight: 0 }}
       defaultSelectedKeys={[routeInfo?.key]}
-      defaultOpenKeys={setDefaultOpen(routeInfo?.key)}
+      defaultOpenKeys={setDefaultOpen(routeInfo?.path?.split('/')[2])}
       className={hideGroupTitle ? 'hide-group-title' : ''}
     >
       {navigationConfig.map((menu) => {

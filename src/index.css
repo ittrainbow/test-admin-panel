@@ -1,9 +1,18 @@
+.loading {
+  display: flex !important;
+  padding: 50px !important;
+  justify-content: center !important;
+  align-items: center !important;
+  min-height: calc(100vh - 200px);
+}
+
 .loading.cover-content {
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
 }
+
 .loading.cover-page {
   position: fixed;
   width: 100%;
@@ -12,6 +21,7 @@
   align-items: center;
   justify-content: center;
 }
+
 .loading .ant-spin {
   color: #3e79f7;
 }

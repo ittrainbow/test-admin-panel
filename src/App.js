@@ -6,7 +6,7 @@ import Views from './views'
 import { Route, Switch } from 'react-router-dom'
 import { ThemeSwitcherProvider } from 'react-css-theme-switcher'
 import { THEME_CONFIG } from './configs/AppConfig'
-import Products from 'views/app-views/products/products'
+import Products from 'views/app-views/products/ProductsList'
 
 const themes = {
   dark: `${process.env.PUBLIC_URL}/css/dark-theme.css`,
