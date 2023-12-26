@@ -13,8 +13,8 @@ const nullDragStart = { x: 0, y: 0 }
 const initialState = {
   cardList: JSON.parse(localStorage.getItem('dragdropchart')) || [],
   dragStart: nullDragStart,
-  fieldWidth: 700,
-  fieldHeight: 350,
+  fieldWidth: 720,
+  fieldHeight: 420,
   changes: false
 }
 
@@ -43,7 +43,6 @@ const dragdrop = (state = initialState, action) => {
       const { e } = payload
       const { clientX, clientY } = e
       const offsetX = clientX - state.dragStart.x
-      console.log(191, state.dragStart)
       const offsetY = clientY - state.dragStart.y
       const newCardsMove = structuredClone(state.cardList)
       const index = newCardsMove.map((el) => el.id).indexOf(Number(e.currentTarget.id))

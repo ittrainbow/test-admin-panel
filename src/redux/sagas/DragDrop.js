@@ -1,3 +1,1 @@
-export default function* DragDropSagas() {
-  console.log('dragdrop sagas')
-}
+export default function* DragDropSagas() {}

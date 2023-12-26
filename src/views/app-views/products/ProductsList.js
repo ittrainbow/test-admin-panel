@@ -46,8 +46,6 @@ const Products = () => {
 
   if (loading) return <Loading />
 
-  console.log(100, categories)
-
   return (
     <>
       <PageHeader display={true} title="sidenav.menu.products" />

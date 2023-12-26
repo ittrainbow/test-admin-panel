@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Button, Input, notification, Upload } from 'antd'
 import { UploadOutlined } from '@ant-design/icons'
 import { useDispatch, useSelector } from 'react-redux'
-import { isEqual } from 'lodash'
 import { saveAs } from 'file-saver'
 
 import PageHeader from 'components/layout-components/PageHeader'
@@ -13,15 +12,8 @@ import './DragDrop.css'
 export const DragDrop = () => {
   const dispatch = useDispatch()
   const { cardList, fieldWidth, fieldHeight } = useSelector((store) => store.dragdrop)
-  const [tempWidth, setTempWidth] = useState(700)
-  const [tempHeight, setTempHeight] = useState(350)
-  const [changes, setChanges] = useState(false)
-
-  useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem('dragdropchart')) || []
-    const equal = isEqual(cardList, stored)
-    setChanges(!equal)
-  }, [cardList])
+  const [tempWidth, setTempWidth] = useState(fieldWidth)
+  const [tempHeight, setTempHeight] = useState(fieldHeight)
 
   const handleSaveDimensions = () => {
     const width = Math.max(Math.min(tempWidth || fieldWidth, 900), 100)
@@ -36,19 +28,12 @@ export const DragDrop = () => {
 
   const handleClearChart = () => dispatch({ type: TYPES.DD_CLEAR_CHART })
 
-  const handleRemoveElem = (id) => dispatch({ type: TYPES.DD_REMOVE_ELEMENT, payload: id })
-
-  const handleDragStart = (e) => dispatch({ type: TYPES.DD_MOVE_START, payload: { e } })
-
-  const handleDragEnd = (e) => dispatch({ type: TYPES.DD_MOVE_END, payload: { e } })
-
-  const cards = useCards({ handleDragStart, handleDragEnd, handleRemoveElem })
+  const { changes, cards, thumbs } = useCards()
 
   const handleSaveChartToLocalStorage = () => {
     cardList.length
       ? localStorage.setItem('dragdropchart', JSON.stringify(cardList))
       : localStorage.removeItem('dragdropchart')
-    setChanges(false)
     notification.open({
       message: 'Table chart saved',
       description: `Saved to browser localStorage as 'dragdropchart' item`,
@@ -57,8 +42,6 @@ export const DragDrop = () => {
       duration: 2
     })
   }
-
-  const style = { width: 100, textAlign: 'center' }
 
   const handleTempWidth = (e) => {
     const { value } = e.target
@@ -74,7 +57,7 @@ export const DragDrop = () => {
 
   const handleSaveFile = () => {
     const json = new Blob([JSON.stringify(cardList)], { type: 'application/json' })
-    saveAs(json, 'export.json')
+    saveAs(json, `export-${new Date().getTime()}.json`)
   }
 
   const handleLoadFile = (e) => {
@@ -91,22 +74,22 @@ export const DragDrop = () => {
   return (
     <>
       <PageHeader display={true} title="sidenav.menu.dragdrop" />
-      <div style={{ display: 'flex', fledDirection: 'row' }}>
+      <div className="dragdrop-container">
         <div className="dim-inputs">
-          <Input value={`Width: ${tempWidth}`} style={style} onChange={handleTempWidth} />
-          <Input value={`Height: ${tempHeight}`} style={style} onChange={handleTempHeight} />
-          <Button style={style} disabled={saveSizeDisabled} onClick={handleSaveDimensions}>
+          <Input value={`Width: ${tempWidth}`} className="card-button" onChange={handleTempWidth} />
+          <Input value={`Height: ${tempHeight}`} className="card-button" onChange={handleTempHeight} />
+          <Button className="card-button" disabled={saveSizeDisabled} onClick={handleSaveDimensions}>
             Save size
           </Button>
-          <hr style={style} />
-          <Button style={style} disabled={!changes} onClick={handleSaveChartToLocalStorage}>
+          <hr className="card-button" />
+          <Button className="card-button" disabled={!changes} onClick={handleSaveChartToLocalStorage}>
             Save chart
           </Button>
-          <Button style={style} disabled={!cardList.length} onClick={handleClearChart}>
+          <Button className="card-button" disabled={!cardList.length} onClick={handleClearChart}>
             Clear chart
           </Button>
-          <hr style={style} />
-          <Button style={style} onClick={handleSaveFile}>
+          <hr className="card-button" />
+          <Button className="card-button" onClick={handleSaveFile}>
             Save file
           </Button>
           <Upload
@@ -119,25 +102,25 @@ export const DragDrop = () => {
               return false
             }}
           >
-            <Button style={style} icon={<UploadOutlined />}>
+            <Button className="card-button" icon={<UploadOutlined />}>
               Upload
             </Button>
           </Upload>
         </div>
 
-        <div className="buttons-container-col">
-          <Button onClick={() => handleAddElement('small')}>Add small table</Button>
-          <Button onClick={() => handleAddElement('medium')}>Add medium table</Button>
-          <Button onClick={() => handleAddElement('large')}>Add large table</Button>
+        <div className="buttons-container">
+          {thumbs.map((thumb) => {
+            const { src, text } = thumb
+            return (
+              <Button key={text} className="card-button-big" onClick={() => handleAddElement('small')}>
+                {text}
+                <img src={src} width={75} alt={text} />
+              </Button>
+            )
+          })}
         </div>
-        <div className="field-container">
-          <div className="buttons-container">
-            <Button onClick={() => handleAddElement('small')}>Add small table</Button>
-            <Button onClick={() => handleAddElement('medium')}>Add medium table</Button>
-            <Button onClick={() => handleAddElement('large')}>Add large table</Button>
-          </div>
-          {cards}
-        </div>
+
+        {cards}
       </div>
     </>
   )

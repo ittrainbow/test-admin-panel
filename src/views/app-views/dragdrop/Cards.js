@@ -1,6 +1,10 @@
-import { useSelector } from 'react-redux'
+import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { isEqual } from 'lodash'
 
-const offset = { x: 120, y: 96 } // done lazy, can be calculated in useEffect
+import * as TYPES from 'redux/constants/DragDrop'
+
+const offset = { x: 230, y: 56 } // done lazy, can be calculated in useEffect
 
 export const getCard = ({ e: size, cardList }) => {
   const id =
@@ -26,16 +30,27 @@ export const getCard = ({ e: size, cardList }) => {
   }
 }
 
-export const getCardStyle = (card) => {
-  const { width, height, x, y, id } = card
-
-  return { left: x + offset.x, top: y + offset.y, width, height, zIndex: 2 * id }
-}
-
-export const useCards = ({ handleDragStart, handleDragEnd, handleRemoveElem }) => {
+export const useCards = () => {
+  const dispatch = useDispatch()
+  const [changes, setChanges] = useState(false)
   const { cardList, fieldWidth, fieldHeight } = useSelector((store) => store.dragdrop)
 
-  return (
+  useEffect(() => {
+    const stored = JSON.parse(localStorage.getItem('dragdropchart')) || []
+    const equal = isEqual(cardList, stored)
+    setChanges(!equal)
+  }, [cardList])
+
+  const getCardStyle = (card) => {
+    const { width, height, x, y, id } = card
+    return { left: x + offset.x, top: y + offset.y, width, height, zIndex: 2 * id }
+  }
+
+  const handleRemoveElem = (id) => dispatch({ type: TYPES.DD_REMOVE_ELEMENT, payload: id })
+  const handleDragStart = (e) => dispatch({ type: TYPES.DD_MOVE_START, payload: { e } })
+  const handleDragEnd = (e) => dispatch({ type: TYPES.DD_MOVE_END, payload: { e } })
+
+  const cards = (
     <div className="field" style={{ width: fieldWidth, height: fieldHeight }}>
       {cardList.map((card) => {
         const { id, size } = card
@@ -63,4 +78,21 @@ export const useCards = ({ handleDragStart, handleDragEnd, handleRemoveElem }) =
       })}
     </div>
   )
+
+  const thumbs = [
+    {
+      src: '/img/chairs/small.png',
+      text: 'Add small'
+    },
+    {
+      src: '/img/chairs/medium.png',
+      text: 'Add medium'
+    },
+    {
+      src: '/img/chairs/large.png',
+      text: 'Add large'
+    }
+  ]
+
+  return { changes, cards, thumbs }
 }
