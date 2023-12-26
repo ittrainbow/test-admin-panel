@@ -1253,7 +1253,7 @@ body {
   line-height: 1.5;
   background-color: #fafafb;
   font-feature-settings: 'tnum';
-  z-index: 1
+  z-index: 1;
 }
 [tabindex='-1']:focus {
   outline: 0 !important;
@@ -26969,7 +26969,7 @@ ul.anticons-list li.copied::after {
   border: 1px solid #edf2f9;
 }
 .app-content {
-  padding: 25px;
+  padding: 15px !important;
   margin-top: 70px;
   min-height: calc(100vh - 130px);
   position: relative;
@@ -27307,7 +27307,7 @@ ul.anticons-list li.copied::after {
 }
 .page-header-alt {
   background-color: #fff;
-  padding: 25px;
+  padding: 15px;
   margin-top: -25px;
   margin-left: -25px;
   margin-right: -25px;

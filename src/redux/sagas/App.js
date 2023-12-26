@@ -20,7 +20,7 @@ const fetchData = async (string) => {
 function* fetchProductsSaga() {
   try {
     const products = yield call(fetchData, 'https://fakestoreapi.com/products/')
-    yield delay(1000)
+    yield delay(500)
     yield put({ type: SET_PRODUCTS, payload: products })
   } catch (error) {
     if (console.error instanceof Error) {
@@ -32,7 +32,7 @@ function* fetchProductsSaga() {
 function* fetchUsersSaga() {
   try {
     const users = yield call(fetchData, 'https://jsonplaceholder.typicode.com/users/')
-    yield delay(1000)
+    yield delay(500)
     yield put({ type: SET_USERS, payload: users })
   } catch (error) {
     if (console.error instanceof Error) {
@@ -43,14 +43,14 @@ function* fetchUsersSaga() {
 
 function* delaySaga() {
   yield put({ type: SET_LOADING_TRUE })
-  yield delay(1000)
+  yield delay(500)
   yield put({ type: SET_LOADING_FALSE })
 }
 
 function* fetchSelectedUserSaga({ payload }) {
   try {
     const user = yield call(fetchData, `https://jsonplaceholder.typicode.com/users/${payload}`)
-    yield delay(1000)
+    yield delay(500)
     yield put({ type: SET_SELECTED_USER, payload: user })
   } catch (error) {
     if (console.error instanceof Error) {

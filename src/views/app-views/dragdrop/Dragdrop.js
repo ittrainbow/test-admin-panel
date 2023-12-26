@@ -1,17 +1,17 @@
 import PageHeader from 'components/layout-components/PageHeader'
 import React, { useState, useEffect } from 'react'
-import { Button, Input } from 'antd'
+import { Button, Input, notification } from 'antd'
 import { isEqual } from 'lodash'
 
-const offset = { x: 150, y: 60 } // lazy, can be calculated in useEffect
+import { getCard, getCardStyle } from './Cards'
+import './DragDrop.css'
 
-export const Dragdrop = () => {
+export const DragDrop = () => {
   const [cardList, setCardList] = useState([])
-
-  const [start, setStart] = useState([null, null])
-  const [fieldWidth, setFieldWidth] = useState(600)
+  const [dragStart, setDragStart] = useState([null, null])
+  const [fieldWidth, setFieldWidth] = useState(700)
   const [fieldHeight, setFieldHeight] = useState(350)
-  const [tempWidth, setTempWidth] = useState(600)
+  const [tempWidth, setTempWidth] = useState(700)
   const [tempHeight, setTempHeight] = useState(350)
   const [changes, setChanges] = useState(false)
 
@@ -29,18 +29,18 @@ export const Dragdrop = () => {
   const dragStartHandler = (e) => {
     const x = e.clientX
     const y = e.clientY
-    setStart({ x, y })
+    setDragStart({ x, y })
   }
 
   const dragEndHandler = (e) => {
-    const offsetX = e.clientX - start.x
-    const offsetY = e.clientY - start.y
+    const offsetX = e.clientX - dragStart.x
+    const offsetY = e.clientY - dragStart.y
 
     const newCards = structuredClone(cardList)
-    const index = newCards.map((el) => el.id).indexOf(Number(e.target.id))
+    const index = newCards.map((el) => el.id).indexOf(Number(e.currentTarget.id))
     const card = newCards[index]
     const x = Math.max(0, Math.min(card.x + offsetX, fieldWidth - card.width - 10))
-    const y = Math.max(0, Math.min(card.y + offsetY, fieldHeight - card.height - 8))
+    const y = Math.max(0, Math.min(card.y + offsetY, fieldHeight - card.height - 10))
     const movingCard = { ...card, x, y }
 
     newCards[index] = movingCard
@@ -56,14 +56,10 @@ export const Dragdrop = () => {
     setTempHeight(newHeight)
   }
 
-  const handleAddElement = () => {
-    const id =
-      cardList
-        .map((el) => el.id)
-        .sort((a, b) => a - b)
-        .at(-1) + 1 || 1
+  const handleAddElement = (e) => {
+    const card = getCard({ e, cardList })
     const newCards = structuredClone(cardList)
-    newCards.push({ id, x: 0, y: 0, text: id, width: 150, height: 70 })
+    newCards.push(card)
     setCardList(newCards)
   }
 
@@ -72,72 +68,92 @@ export const Dragdrop = () => {
       ? localStorage.setItem('dragdropchart', JSON.stringify(cardList))
       : localStorage.removeItem('dragdropchart')
     setChanges(false)
+    notification.open({
+      message: 'Table chart saved',
+      description: `Saved to browser localStorage as 'dragdropchart' item`,
+      placement: 'top',
+      onClick: () => notification.close(),
+      duration: 2
+    })
   }
-
-  console.log(23, fieldHeight, tempHeight)
 
   const handleClearChart = () => setCardList([])
 
-  const style = { width: 120, textAlign: 'center' }
+  const handleRemoveElem = (id) => {
+    const newCards = structuredClone(cardList).filter((card) => card.id !== id)
+    setCardList(newCards)
+  }
+
+  const style = { width: 100, textAlign: 'center' }
+
+  const tempWidthHandler = (e) => {
+    const { value } = e.target
+    const num = value.split(' ').at(-1)
+    num && setTempWidth(num)
+  }
+
+  const tempHeightHandler = (e) => {
+    const { value } = e.target
+    const num = value.split(' ').at(-1)
+    num && setTempHeight(num)
+  }
+
+  const saveSizeDisabled = fieldWidth === tempWidth && fieldHeight === tempHeight
 
   return (
     <>
       <PageHeader display={true} title="sidenav.menu.dragdrop" />
       <div style={{ display: 'flex', fledDirection: 'row' }}>
         <div className="dim-inputs">
-          Width:
-          <Input
-            placeholder={fieldWidth}
-            value={tempWidth}
-            style={style}
-            onChange={(e) => setTempWidth(Number(e.target.value))}
-          />
-          Height:
-          <Input
-            placeholder={fieldHeight}
-            value={tempHeight}
-            style={style}
-            onChange={(e) => setTempHeight(Number(e.target.value))}
-          />
-          <Button
-            style={style}
-            disabled={fieldWidth === tempWidth && fieldHeight === tempHeight}
-            onClick={handleSaveDimensions}
-          >
+          <Input value={`Width: ${tempWidth}`} style={style} onChange={tempWidthHandler} />
+          <Input value={`Height: ${tempHeight}`} style={style} onChange={tempHeightHandler} />
+          <Button disabled={saveSizeDisabled} onClick={handleSaveDimensions}>
             Save size
           </Button>
           <hr style={style} />
-          <Button disabled={!changes} style={style} onClick={handleSaveChart}>
+          <Button disabled={!changes} onClick={handleSaveChart}>
             Save chart
           </Button>
-          <Button style={style} disabled={!cardList.length} onClick={handleClearChart}>
+          <Button disabled={!cardList.length} onClick={handleClearChart}>
             Clear chart
           </Button>
-          <Button style={style} onClick={handleAddElement}>
-            Add elem
-          </Button>
         </div>
-        <div className="field" style={{ width: fieldWidth, height: fieldHeight }}>
-          {cardList.map((card) => {
-            const { id, x, y, text } = card
-            return (
-              <div
-                style={{ left: x + offset.x, top: y + offset.y }}
-                id={id}
-                className="card"
-                onDragStart={dragStartHandler}
-                onDragEnd={dragEndHandler}
-                draggable={true}
-                key={id}
-              >
-                {`id: ${text}, x: ${x}, y: ${y}`}
-              </div>
-            )
-          })}
+        <div className="field-container">
+          <div className="buttons-container">
+            <Button onClick={() => handleAddElement('small')}>Add small table</Button>
+            <Button onClick={() => handleAddElement('medium')}>Add medium table</Button>
+            <Button onClick={() => handleAddElement('large')}>Add large table</Button>
+          </div>
+          <div className="field" style={{ width: fieldWidth, height: fieldHeight }}>
+            {cardList.map((card) => {
+              const { id, size } = card
+              const src = `/img/chairs/${size}.png`
+              return (
+                <div
+                  style={getCardStyle(card)}
+                  id={id}
+                  className="card"
+                  onDragStart={dragStartHandler}
+                  onDragEnd={dragEndHandler}
+                  draggable={true}
+                  key={id}
+                >
+                  <img src={src} style={{ zIndex: 2 * id }} />
+                  <div
+                    className="card-remove"
+                    onClick={() => handleRemoveElem(id)}
+                    style={{ zIndex: 2 * id + 1, position: 'absolute' }}
+                  >
+                    remove
+                  </div>
+                </div>
+              )
+            })}
+          </div>
         </div>
       </div>
     </>
   )
 }
 
-export default Dragdrop
+export default DragDrop
