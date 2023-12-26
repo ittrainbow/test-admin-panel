@@ -56,18 +56,18 @@
 }
 
 .card-button {
-  width: 100px;
-  text-align: center;
+  width: 100px !important;
+  text-align: center !important;
 }
 
 .card-button-big {
-  display: flex;
-  flex-direction: column;
+  display: flex !important;
+  flex-direction: column !important;
   justify-content: center;
   align-items: center;
   gap: 5px;
-  width: 100px;
-  height: 110px;
+  width: 100px !important;
+  height: 110px !important;
 }
 
 .dragdrop-container {
