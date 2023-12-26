@@ -82,15 +82,18 @@ export const useCards = () => {
   const thumbs = [
     {
       src: '/img/chairs/small.png',
-      text: 'Add small'
+      text: 'Add small',
+      element: 'small'
     },
     {
       src: '/img/chairs/medium.png',
-      text: 'Add medium'
+      text: 'Add medium',
+      element: 'medium'
     },
     {
       src: '/img/chairs/large.png',
-      text: 'Add large'
+      text: 'Add large',
+      element: 'large'
     }
   ]
 

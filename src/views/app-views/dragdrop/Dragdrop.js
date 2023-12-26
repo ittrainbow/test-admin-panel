@@ -110,9 +110,9 @@ export const DragDrop = () => {
 
         <div className="buttons-container">
           {thumbs.map((thumb) => {
-            const { src, text } = thumb
+            const { src, text, element } = thumb
             return (
-              <Button key={text} className="card-button-big" onClick={() => handleAddElement('small')}>
+              <Button key={text} className="card-button-big" onClick={() => handleAddElement(element)}>
                 {text}
                 <img src={src} width={75} alt={text} />
               </Button>
