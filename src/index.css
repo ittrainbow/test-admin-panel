@@ -44,4 +44,5 @@
 
 .ant-btn {
   min-width: 40px;
+  padding: 8px !important;
 }

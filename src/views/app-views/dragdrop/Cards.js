@@ -1,4 +1,6 @@
-const offset = { x: 128, y: 96 } // done lazy, can be calculated in useEffect
+import { useSelector } from 'react-redux'
+
+const offset = { x: 120, y: 96 } // done lazy, can be calculated in useEffect
 
 export const getCard = ({ e: size, cardList }) => {
   const id =
@@ -30,4 +32,35 @@ export const getCardStyle = (card) => {
   return { left: x + offset.x, top: y + offset.y, width, height, zIndex: 2 * id }
 }
 
-export const getCardImg = (size) => {}
+export const useCards = ({ handleDragStart, handleDragEnd, handleRemoveElem }) => {
+  const { cardList, fieldWidth, fieldHeight } = useSelector((store) => store.dragdrop)
+
+  return (
+    <div className="field" style={{ width: fieldWidth, height: fieldHeight }}>
+      {cardList.map((card) => {
+        const { id, size } = card
+        const src = `/img/chairs/${size}.png`
+        return (
+          <div
+            style={getCardStyle(card)}
+            id={id}
+            className="card"
+            onDragStart={handleDragStart}
+            onDragEnd={handleDragEnd}
+            draggable={true}
+            key={id}
+          >
+            <img src={src} alt={id} style={{ zIndex: 2 * id }} />
+            <div
+              className="card-remove"
+              onClick={() => handleRemoveElem(id)}
+              style={{ zIndex: 2 * id + 1, position: 'absolute' }}
+            >
+              remove
+            </div>
+          </div>
+        )
+      })}
+    </div>
+  )
+}

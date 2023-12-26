@@ -1,0 +1,7 @@
+export const DD_ADD_ELEMENT = 'DD_ADD_ELEMENT'
+export const DD_REMOVE_ELEMENT = 'DD_REMOVE_ELEMENT'
+export const DD_CLEAR_CHART = 'DD_CLEAR_CHART'
+export const DD_MOVE_START = 'DD_MOVE_START'
+export const DD_MOVE_END = 'DD_MOVE_END'
+export const DD_CHANGES = 'DD_CHANGES'
+export const DD_SET_FIELD = 'DD_SET_FIELD'
