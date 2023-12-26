@@ -14869,7 +14869,7 @@ tr.ant-table-expanded-row .ant-descriptions-view table {
 .ant-layout-sider {
   position: relative;
   min-width: 0;
-  background: #283142;
+  background-color: #283142;
   transition: all 0.2s;
 }
 .ant-layout-sider-children {
@@ -27544,7 +27544,6 @@ ul.anticons-list li.copied::after {
 }
 .app-page-header {
   align-items: center;
-  margin-bottom: 1rem;
 }
 @media only screen and (min-width: 768px) {
   .app-page-header {
@@ -27599,7 +27598,7 @@ ul.anticons-list li.copied::after {
 }
 .top-nav {
   height: 55px;
-  background-color: #001529;
+  /* background-color: #001529; */
   position: fixed;
   top: 70px;
   width: 100%;

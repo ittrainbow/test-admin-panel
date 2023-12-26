@@ -14,18 +14,11 @@ export const NavPanel = () => {
   return (
     <>
       <Menu mode="horizontal">
-        <Menu.Item onClick={handleToggle}>
+        <Menu.Item key="horizontal" onClick={handleToggle}>
           <SettingOutlined className="nav-icon mr-0" />
         </Menu.Item>
       </Menu>
-      <Drawer
-        title="Theme Config"
-        placement="right"
-        style={{ zIndex: themeConfigOpen ? 1000 : -1 }}
-        width={350}
-        onClose={handleToggle}
-        open={themeConfigOpen}
-      >
+      <Drawer title="Theme Config" placement="right" onClose={handleToggle} open={themeConfigOpen}>
         <ThemeConfigurator />
       </Drawer>
     </>

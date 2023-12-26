@@ -16,7 +16,7 @@ const DemoCard = (props) => {
           setMarkdown(md)
         }
       })
-    // return () => { isMounted = false };
+    return () => { isMounted = false };
   }, [code])
 
   return (

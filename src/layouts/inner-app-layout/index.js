@@ -24,7 +24,7 @@ const SideContentMobile = (props) => {
       closable={false}
       onClose={onSideContentClose}
       open={visible}
-      bodyStyle={{ paddingLeft: 0, paddingRight: 0 }}
+      style={{ paddingLeft: 0, paddingRight: 0 }}
     >
       <div className="h-100">{sideContent}</div>
     </Drawer>

@@ -3,11 +3,13 @@ import { Tooltip, Button } from 'antd'
 
 import { AvatarStatus } from 'components/shared-components/AvatarStatus'
 
-export const ProductsTable = () => {
-  return [
+export const productsColumns = () => {
+  const columns = [
     {
       title: 'id',
       dataIndex: 'id',
+      align: 'center',
+      width: 80,
       sorter: (a, b) => a.id - b.id
     },
     {
@@ -74,4 +76,6 @@ export const ProductsTable = () => {
       )
     }
   ]
+
+  return columns
 }

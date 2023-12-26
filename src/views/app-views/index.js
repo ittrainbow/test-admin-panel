@@ -12,8 +12,9 @@ export const AppViews = () => {
           path={`${APP_PREFIX_PATH}/catalog/products`}
           component={lazy(() => import(`./products/ProductsList.js`))}
         />
+        <Route path={`${APP_PREFIX_PATH}/dragdrop`} component={lazy(() => import(`./dragdrop/Dragdrop.js`))} />
         <Route path={`${APP_PREFIX_PATH}/clients/list`} component={lazy(() => import(`./clients/UsersList.js`))} />
-        <Route path={`${APP_PREFIX_PATH}/clients/user`} component={lazy(() => import(`./clients/UserProfile.js`))} />
+        <Route path={`${APP_PREFIX_PATH}/clients/:id`} component={lazy(() => import(`./clients/UserProfile.js`))} />
         <Redirect from={`${APP_PREFIX_PATH}`} to={`${APP_PREFIX_PATH}/catalog/products`} />
       </Switch>
     </Suspense>

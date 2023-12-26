@@ -18,7 +18,6 @@ export const Views = (props) => {
           <Route exact path="/">
             <Redirect to={APP_PREFIX_PATH} />
           </Route>
-
           <Route path={AUTH_PREFIX_PATH}>
             <AuthLayout />
           </Route>

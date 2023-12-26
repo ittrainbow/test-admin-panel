@@ -61,9 +61,9 @@ export const dashBoardNavTree = [
         ]
       },
       {
-        key: 'orders',
-        path: `${APP_PREFIX_PATH}/orders`,
-        title: 'sidenav.menu.orders',
+        key: 'dragdrop',
+        path: `${APP_PREFIX_PATH}/dragdrop`,
+        title: 'sidenav.menu.dragdrop',
         icon: ShoppingOutlined,
         breadcrumb: false,
         submenu: []

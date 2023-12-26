@@ -5,7 +5,9 @@ import {
   SET_LOADING_FALSE,
   SET_LOADING_TRUE,
   SET_PRODUCTS,
-  SET_USERS
+  SET_USERS,
+  FETCH_SELECTED_USER,
+  SET_SELECTED_USER
 } from 'redux/constants/App'
 import {
   AUTHENTICATED,
@@ -19,6 +21,7 @@ import {
 const initState = {
   loading: false,
   users: [],
+  selectedUser: null,
   products: [],
   error: null
 }
@@ -48,13 +51,28 @@ const app = (state = initState, action) => {
     case SET_PRODUCTS:
       return {
         ...state,
+        loading: false,
         products: action.payload
       }
 
     case SET_USERS:
       return {
         ...state,
+        loading: false,
         users: action.payload
+      }
+
+    case FETCH_SELECTED_USER:
+      return {
+        ...state,
+        loading: true
+      }
+
+    case SET_SELECTED_USER:
+      return {
+        ...state,
+        loading: false,
+        selectedUser: action.payload
       }
 
     case ERROR:

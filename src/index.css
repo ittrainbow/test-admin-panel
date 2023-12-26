@@ -32,3 +32,16 @@
   gap: 10px !important;
   padding: 10px 0 !important;
 }
+
+.ant-select-arrow {
+  padding-top: 8px;
+}
+
+.ant-table-cell,
+.ant-table-thead {
+  padding: 8px 4px !important;
+}
+
+.ant-btn {
+  min-width: 40px;
+}

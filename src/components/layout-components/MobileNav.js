@@ -29,7 +29,7 @@ export const MobileNav = ({
       closable={false}
       onClose={onClose}
       open={mobileNav}
-      bodyStyle={{ padding: 5 }}
+      style={{ padding: 5 }}
     >
       <Flex flexDirection="column" className="h-100">
         <Flex justifyContent="between" alignItems="center">

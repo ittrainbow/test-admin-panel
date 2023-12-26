@@ -15,7 +15,6 @@ const { useBreakpoint } = Grid
 const setLocale = (isLocaleOn, localeKey) => (isLocaleOn ? <IntlMessage id={localeKey} /> : localeKey.toString())
 
 const setDefaultOpen = (key) => {
-  console.log(350, key)
   let keyList = []
   let keyString = ''
   if (key) {
@@ -38,6 +37,42 @@ const SideNavContent = (props) => {
     }
   }
 
+  const navmenu = navigationConfig.map((menu) => {
+    return menu.submenu.length > 0 ? (
+      <Menu.ItemGroup key={menu.key} title={setLocale(localization, menu.title)}>
+        {menu.submenu.map((subMenuFirst) =>
+          subMenuFirst.submenu.length > 0 ? (
+            <SubMenu
+              icon={subMenuFirst.icon ? <Icon type={subMenuFirst?.icon} /> : null}
+              key={subMenuFirst.key}
+              title={setLocale(localization, subMenuFirst.title)}
+            >
+              {subMenuFirst.submenu.map((subMenuSecond) => (
+                <Menu.Item key={subMenuSecond.key}>
+                  {subMenuSecond.icon ? <Icon type={subMenuSecond?.icon} /> : null}
+                  <span>{setLocale(localization, subMenuSecond.title)}</span>
+                  <Link onClick={() => closeMobileNav()} to={subMenuSecond.path} />
+                </Menu.Item>
+              ))}
+            </SubMenu>
+          ) : (
+            <Menu.Item key={subMenuFirst.key}>
+              {subMenuFirst.icon ? <Icon type={subMenuFirst.icon} /> : null}
+              <span>{setLocale(localization, subMenuFirst.title)}</span>
+              <Link onClick={() => closeMobileNav()} to={subMenuFirst.path} />
+            </Menu.Item>
+          )
+        )}
+      </Menu.ItemGroup>
+    ) : (
+      <Menu.Item key={menu.key}>
+        {menu.icon ? <Icon type={menu?.icon} /> : null}
+        <span>{setLocale(localization, menu?.title)}</span>
+        {menu.path ? <Link onClick={() => closeMobileNav()} to={menu.path} /> : null}
+      </Menu.Item>
+    )
+  })
+
   return (
     <Menu
       theme={sideNavTheme === SIDE_NAV_LIGHT ? 'light' : 'dark'}
@@ -47,43 +82,7 @@ const SideNavContent = (props) => {
       defaultOpenKeys={setDefaultOpen(routeInfo?.path?.split('/')[2])}
       className={hideGroupTitle ? 'hide-group-title' : ''}
     >
-      {navigationConfig.map((menu) => {
-        return menu.submenu.length > 0 ? (
-          <Menu.ItemGroup key={menu.key} title={setLocale(localization, menu.title)}>
-            {menu.submenu.map((subMenuFirst) =>
-              subMenuFirst.submenu.length > 0 ? (
-                <SubMenu
-                  icon={subMenuFirst.icon ? <Icon type={subMenuFirst?.icon} /> : null}
-                  key={subMenuFirst.key}
-                  title={setLocale(localization, subMenuFirst.title)}
-                >
-                  {subMenuFirst.submenu.map((subMenuSecond) => (
-                    <Menu.Item key={subMenuSecond.key}>
-                      {subMenuSecond.icon ? <Icon type={subMenuSecond?.icon} /> : null}
-                      <span>{setLocale(localization, subMenuSecond.title)}</span>
-                      <Link onClick={() => closeMobileNav()} to={subMenuSecond.path} />
-                    </Menu.Item>
-                  ))}
-                </SubMenu>
-              ) : (
-                <Menu.Item key={subMenuFirst.key}>
-                  {subMenuFirst.icon ? <Icon type={subMenuFirst.icon} /> : null}
-                  <span>{setLocale(localization, subMenuFirst.title)}</span>
-                  <Link onClick={() => closeMobileNav()} to={subMenuFirst.path} />
-                </Menu.Item>
-              )
-            )}
-          </Menu.ItemGroup>
-        ) : (
-          <Menu.Item
-          // key={menu.key}
-          >
-            {menu.icon ? <Icon type={menu?.icon} /> : null}
-            <span>{setLocale(localization, menu?.title)}</span>
-            {menu.path ? <Link onClick={() => closeMobileNav()} to={menu.path} /> : null}
-          </Menu.Item>
-        )
-      })}
+      {navmenu}
     </Menu>
   )
 }
@@ -95,7 +94,7 @@ const TopNavContent = (props) => {
       {navigationConfig.map((menu) =>
         menu.submenu.length > 0 ? (
           <SubMenu
-            // key={menu.key}
+            key={menu.key}
             popupClassName="top-nav-menu"
             title={
               <span>
