@@ -8,7 +8,7 @@ import {
   SET_USERS,
   FETCH_SELECTED_USER,
   SET_SELECTED_USER
-} from 'redux/constants/App'
+} from '../constants/App'
 import {
   AUTHENTICATED,
   SHOW_AUTH_MESSAGE,
@@ -16,7 +16,7 @@ import {
   SIGNIN_WITH_GOOGLE_AUTHENTICATED,
   SIGNOUT_SUCCESS,
   SIGNUP_SUCCESS
-} from 'redux/constants/Auth'
+} from '../constants/Auth'
 
 const initState = {
   loading: false,

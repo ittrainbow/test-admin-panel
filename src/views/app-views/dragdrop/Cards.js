@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { isEqual } from 'lodash'
 
-import * as TYPES from 'redux/constants/DragDrop'
+import * as TYPES from '../../../redux/constants/DragDrop'
 
 const offset = { x: 230, y: 56 } // done lazy, can be calculated in useEffect
 

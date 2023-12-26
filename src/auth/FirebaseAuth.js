@@ -1,19 +1,18 @@
-import firebase from 'firebase/app'
-import 'firebase/auth'
-import 'firebase/firestore'
-import firebaseConfig from 'configs/FirebaseConfig'
+import { initializeApp } from 'firebase/app'
+import { getFirestore } from 'firebase/firestore'
+import { getAuth } from 'firebase/auth'
+import { firebaseConfig } from '../configs/FirebaseConfig'
+import { GoogleAuthProvider, FacebookAuthProvider, TwitterAuthProvider, GithubAuthProvider } from 'firebase/auth'
 
-firebase.initializeApp(firebaseConfig)
+const app = initializeApp(firebaseConfig)
 
-// firebase utils
-const db = firebase.firestore()
-const auth = firebase.auth()
-const currentUser = auth.currentUser
-const googleAuthProvider = new firebase.auth.GoogleAuthProvider()
-const facebookAuthProvider = new firebase.auth.FacebookAuthProvider()
-const twitterAuthProvider = new firebase.auth.TwitterAuthProvider()
-const githubAuthProvider = new firebase.auth.GithubAuthProvider()
+const db = getFirestore(app)
+const auth = getAuth(app)
+const googleAuthProvider = new GoogleAuthProvider()
+const facebookAuthProvider = new FacebookAuthProvider()
+const twitterAuthProvider = new TwitterAuthProvider()
+const githubAuthProvider = new GithubAuthProvider()
 
-export { db, auth, currentUser, googleAuthProvider, facebookAuthProvider, twitterAuthProvider, githubAuthProvider }
+export { db, auth, googleAuthProvider, facebookAuthProvider, twitterAuthProvider, githubAuthProvider }
 
-export default firebase
+// export default firebase

@@ -8,7 +8,7 @@ import {
   onTopNavColorChange,
   onHeaderNavColorChange,
   onSwitchTheme
-} from 'redux/actions/Theme'
+} from '../../redux/actions/Theme'
 import { CopyOutlined } from '@ant-design/icons'
 import ColorPicker from 'components/shared-components/ColorPicker'
 import CopyToClipboard from 'react-copy-to-clipboard'

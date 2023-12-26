@@ -6,7 +6,7 @@ import {
   DD_REMOVE_ELEMENT,
   DD_SET_FIELD,
   DD_LOAD_ELEMENTS
-} from 'redux/constants/DragDrop'
+} from '../constants/DragDrop'
 
 const nullDragStart = { x: 0, y: 0 }
 

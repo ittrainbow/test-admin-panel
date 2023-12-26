@@ -10,7 +10,7 @@ import {
   SET_PRODUCTS,
   SET_SELECTED_USER,
   SET_USERS
-} from 'redux/constants/App'
+} from '../constants/App'
 
 const fetchData = async (string) => {
   const data = await fetch(string).then((resp) => resp.json())

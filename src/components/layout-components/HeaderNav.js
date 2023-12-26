@@ -5,9 +5,9 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import Logo from './Logo'
 import NavPanel from './NavPanel'
 import NavSearch from './NavSearch'
-import { NAV_TYPE_TOP, SIDE_NAV_COLLAPSED_WIDTH, SIDE_NAV_WIDTH } from 'constants/ThemeConstant'
+import { NAV_TYPE_TOP, SIDE_NAV_COLLAPSED_WIDTH, SIDE_NAV_WIDTH } from '../../constants/ThemeConstant'
 import utils from 'utils'
-import { TOGGLE_COLLAPSED_NAV, TOGGLE_MOBILE_NAV } from 'redux/constants/Theme'
+import { TOGGLE_COLLAPSED_NAV, TOGGLE_MOBILE_NAV } from '../../redux/constants/Theme'
 
 const { Header } = Layout
 

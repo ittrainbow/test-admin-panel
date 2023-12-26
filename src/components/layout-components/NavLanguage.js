@@ -3,7 +3,7 @@ import { CheckOutlined, GlobalOutlined, DownOutlined } from '@ant-design/icons'
 import { Menu, Dropdown } from 'antd'
 import lang from 'assets/data/language.data.json'
 import { connect } from 'react-redux'
-import { onLocaleChange } from 'redux/actions/Theme'
+import { onLocaleChange } from '../../redux/actions/Theme'
 
 function getLanguageDetail(locale) {
   const data = lang.filter((elm) => elm.langId === locale)

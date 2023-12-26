@@ -4,8 +4,8 @@ import { UploadOutlined } from '@ant-design/icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { saveAs } from 'file-saver'
 
-import PageHeader from 'components/layout-components/PageHeader'
-import * as TYPES from 'redux/constants/DragDrop'
+import PageHeader from '../../../components/layout-components/PageHeader'
+import * as TYPES from '../../../redux/constants/DragDrop'
 import { getCard, useCards } from './Cards'
 import './DragDrop.css'
 

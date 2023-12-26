@@ -2,11 +2,11 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Card, Table } from 'antd'
 
-import { FETCH_USERS, SET_USERS } from 'redux/constants/App'
-import { Loading } from 'components/shared-components/Loading'
+import { FETCH_USERS, SET_USERS } from '../../../redux/constants/App'
+import { Loading } from '../../../components/shared-components/Loading'
 import { usersColumns } from './UsersColumns'
 import { useHistory } from 'react-router-dom'
-import PageHeader from 'components/layout-components/PageHeader'
+import PageHeader from '../../../components/layout-components/PageHeader'
 
 export const UserList = () => {
   const dispatch = useDispatch()

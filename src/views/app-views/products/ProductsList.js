@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Card, Table, Input, Select } from 'antd'
 
-import { FETCH_PRODUCTS } from 'redux/constants/App'
-import { Loading } from 'components/shared-components/Loading'
-import { PageHeader } from 'components/layout-components/PageHeader'
+import { FETCH_PRODUCTS } from '../../../redux/constants/App'
+import { Loading } from '../../../components/shared-components/Loading'
+import { PageHeader } from '../../../components/layout-components/PageHeader'
 import { productsColumns } from './ProductsColumns'
 
 const Products = () => {

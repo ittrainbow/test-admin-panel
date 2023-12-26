@@ -5,9 +5,9 @@ import IntlMessage from '../util-components/IntlMessage'
 import Icon from '../util-components/Icon'
 import navigationConfig from 'configs/NavigationConfig'
 import { connect } from 'react-redux'
-import { SIDE_NAV_LIGHT, NAV_TYPE_SIDE } from 'constants/ThemeConstant'
+import { SIDE_NAV_LIGHT, NAV_TYPE_SIDE } from '../../constants/ThemeConstant'
 import utils from 'utils'
-import { onMobileNavToggle } from 'redux/actions/Theme'
+import { onMobileNavToggle } from '../../redux/actions/Theme'
 
 const { SubMenu } = Menu
 const { useBreakpoint } = Grid

@@ -3,13 +3,13 @@ import React, { useEffect } from 'react'
 import { Card, Row, Col, Avatar, Button } from 'antd'
 
 import { GlobalOutlined, MailOutlined, HomeOutlined, PhoneOutlined } from '@ant-design/icons'
-import { Icon } from 'components/util-components/Icon'
-import PageHeaderAlt from 'components/layout-components/PageHeaderAlt'
-import Flex from 'components/shared-components/Flex'
+import { Icon } from '../../../components/util-components/Icon'
+import PageHeaderAlt from '../../../components/layout-components/PageHeaderAlt'
+import Flex from '../../../components/shared-components/Flex'
 import { useDispatch, useSelector } from 'react-redux'
-import Loading from 'components/shared-components/Loading'
+import Loading from '../../../components/shared-components/Loading'
 import { useParams } from 'react-router-dom'
-import { DELAY, FETCH_SELECTED_USER } from 'redux/constants/App'
+import { DELAY, FETCH_SELECTED_USER } from '../../../redux/constants/App'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 
 export const UserProfile = () => {

@@ -3,7 +3,7 @@ import { SettingOutlined } from '@ant-design/icons'
 import { Drawer, Menu } from 'antd'
 import ThemeConfigurator from './ThemeConfigurator'
 import { useDispatch, useSelector } from 'react-redux'
-import { TOGGLE_THEME_CONFIG_OPEN } from 'redux/constants/Theme'
+import { TOGGLE_THEME_CONFIG_OPEN } from '../../redux/constants/Theme'
 
 export const NavPanel = () => {
   const dispatch = useDispatch()
