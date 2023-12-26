@@ -4,7 +4,8 @@ import {
   DD_MOVE_START,
   DD_MOVE_END,
   DD_REMOVE_ELEMENT,
-  DD_SET_FIELD
+  DD_SET_FIELD,
+  DD_LOAD_ELEMENTS
 } from 'redux/constants/DragDrop'
 
 const nullDragStart = { x: 0, y: 0 }
@@ -20,6 +21,12 @@ const initialState = {
 const dragdrop = (state = initialState, action) => {
   const { payload } = action
   switch (action.type) {
+    case DD_LOAD_ELEMENTS:
+      return {
+        ...state,
+        cardList: payload
+      }
+
     case DD_ADD_ELEMENT:
       const newCardsAdd = structuredClone(state.cardList)
       newCardsAdd.push(payload)

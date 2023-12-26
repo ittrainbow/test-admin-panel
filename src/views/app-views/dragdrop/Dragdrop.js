@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { Button, Input, notification } from 'antd'
+import { Button, Input, notification, Upload } from 'antd'
+import { UploadOutlined } from '@ant-design/icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { isEqual } from 'lodash'
+import { saveAs } from 'file-saver'
 
 import PageHeader from 'components/layout-components/PageHeader'
 import * as TYPES from 'redux/constants/DragDrop'
-import { getCard, getCardStyle, useCards } from './Cards'
+import { getCard, useCards } from './Cards'
 import './DragDrop.css'
 
 export const DragDrop = () => {
@@ -42,7 +44,7 @@ export const DragDrop = () => {
 
   const cards = useCards({ handleDragStart, handleDragEnd, handleRemoveElem })
 
-  const handleSaveChart = () => {
+  const handleSaveChartToLocalStorage = () => {
     cardList.length
       ? localStorage.setItem('dragdropchart', JSON.stringify(cardList))
       : localStorage.removeItem('dragdropchart')
@@ -70,9 +72,19 @@ export const DragDrop = () => {
     num && setTempHeight(num)
   }
 
-  const handleSaveFile = () => {}
+  const handleSaveFile = () => {
+    const json = new Blob([JSON.stringify(cardList)], { type: 'application/json' })
+    saveAs(json, 'export.json')
+  }
 
-  const handleLoadFile = () => {}
+  const handleLoadFile = (e) => {
+    const refArray = ['id', 'x', 'y', 'size', 'width', 'height']
+    const uploadedJSON = JSON.parse(e.target.result)
+    const check = [...new Set(uploadedJSON.map((el) => Object.keys(el).sort((a, b) => a - b)))]
+      .map((el) => el.join('') === refArray.join(''))
+      .reduce((a, b) => a && b)
+    check && dispatch({ type: TYPES.DD_LOAD_ELEMENTS, payload: uploadedJSON })
+  }
 
   const saveSizeDisabled = fieldWidth === tempWidth && fieldHeight === tempHeight
 
@@ -87,7 +99,7 @@ export const DragDrop = () => {
             Save size
           </Button>
           <hr style={style} />
-          <Button style={style} disabled={!changes} onClick={handleSaveChart}>
+          <Button style={style} disabled={!changes} onClick={handleSaveChartToLocalStorage}>
             Save chart
           </Button>
           <Button style={style} disabled={!cardList.length} onClick={handleClearChart}>
@@ -97,9 +109,26 @@ export const DragDrop = () => {
           <Button style={style} onClick={handleSaveFile}>
             Save file
           </Button>
-          <Button style={style} onClick={handleLoadFile}>
-            Load file
-          </Button>
+          <Upload
+            accept=".json"
+            showUploadList={false}
+            beforeUpload={(file) => {
+              const reader = new FileReader()
+              reader.onload = (e) => handleLoadFile(e)
+              reader.readAsText(file)
+              return false
+            }}
+          >
+            <Button style={style} icon={<UploadOutlined />}>
+              Upload
+            </Button>
+          </Upload>
+        </div>
+
+        <div className="buttons-container-col">
+          <Button onClick={() => handleAddElement('small')}>Add small table</Button>
+          <Button onClick={() => handleAddElement('medium')}>Add medium table</Button>
+          <Button onClick={() => handleAddElement('large')}>Add large table</Button>
         </div>
         <div className="field-container">
           <div className="buttons-container">
